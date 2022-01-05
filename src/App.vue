@@ -19,7 +19,7 @@
           <div class="date">Monday, January 3rd, 2022</div>
         </div>
         <div class="weather-box">
-          <div class="temp">50°F</div>
+          <div class="temp">{{ Math.round(weather.main.temp) }} °F</div>
           <div class="weather">Wind</div>
         </div>
       </div>
@@ -42,7 +42,9 @@ export default {
   methods: {
     fetchWeather(e) {
       if (e.key == "Enter") {
-        fetch(`${this.url_base}weather?q=${this.query}&APPID=${this.api_key}`)
+        fetch(
+          `${this.url_base}weather?q=${this.query}&units=imperial&APPID=${this.api_key}`
+        )
           .then((res) => {
             return res.json();
           })
