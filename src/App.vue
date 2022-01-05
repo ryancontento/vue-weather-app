@@ -1,5 +1,10 @@
 <template>
-  <div id="app">
+  <div
+    id="app"
+    :class="
+      typeof weather.main != 'undefined' && weather.main.temp > 70 ? 'warm' : ''
+    "
+  >
     <main>
       <div class="search-box">
         <input
@@ -16,7 +21,7 @@
           <div class="location">
             {{ weather.name }}, {{ weather.sys.country }}
           </div>
-          <div class="date">Monday, January 3rd, 2022</div>
+          <div class="date">{{ dateBuilder() }}</div>
         </div>
         <div class="weather-box">
           <div class="temp">{{ Math.round(weather.main.temp) }} °F</div>
@@ -54,6 +59,38 @@ export default {
     setResults(results) {
       this.weather = results;
     },
+
+    dateBuilder() {
+      let d = new Date();
+      let months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      let days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
+      let day = days[d.getDay()];
+      let date = d.getDate();
+      let month = months[d.getMonth()];
+      let year = d.getFullYear();
+      return `${day} ${date} ${month} ${year}`;
+    },
   },
 };
 </script>
@@ -74,6 +111,10 @@ body {
   background-size: cover;
   background-position: bottom;
   transition: 0.4s;
+}
+
+#app.warm {
+  background-image: url('./assets/warm-bg.jpeg');
 }
 
 main {
